@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<!-- 以下为标准配置，请不要轻易修改 -->
+	<!-- 日志：CONSOLE -->
+	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<param name="target" value="System.out" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%-5p] %c - %m%n" />
+		</layout>
+	</appender>
+
+	<!-- 日志：FILE -->
+	<appender name="FILE" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/logs/t3.core.log" />
+		<param name="Append" value="true" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%-5p]%d{yyyy/MM/dd HH:mm:ss.sss} %c - %m%n" />
+		</layout>
+	</appender>
+
+	<!-- 对各种类的设置 -->
+	<logger name="org.logicalcobwebs.proxool" additivity="true">
+		<level value="info" />
+	</logger>
+
+	<logger name="org.rzzl.t3.web.RequestProcess" additivity="true">
+		<level value="info" />
+	</logger>
+
+	<logger name="org.rzzl.t3.helper.SynchronizationHelper"
+		additivity="true">
+		<level value="info" />
+	</logger>
+
+	<root>
+		<level value="info" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
+	</root>
+
+</log4j:configuration>
+

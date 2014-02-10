@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
+	default-autowire="byName" default-lazy-init="false">
+
+
+	<!-- 载入核心管理器 -->
+	<bean id="propertyPlaceholderConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="locations">
+			<list>
+				<!-- 默认的运行时配置，适用于开发项目缺失配置文件的情况 -->
+				<value>classpath:config/t3.default.properties</value>
+				<!-- 自定义的运行时配置，适用于开发人员开发、调试 -->
+				<value>classpath:t3.properties</value>
+				<!-- 最终的运行时配置，适用于最终生产环境部署，注意，这个文件建议覆盖所有默认配置项目 -->
+				<value>classpath:t3.final.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 载入模板管理器 -->
+	<bean class="org.core.p3.helper.VelocityHelper">
+		<property name="propertiesFile" value="config/velocity.properties" />
+		<property name="properties">
+			<props>
+				<prop key="runtime.log">${velocity.runtime.log}</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- 载入Bean管理器 -->
+	<bean class="org.core.p3.helper.SpringHelper" />
+
+
+	<!-- 注册请求处理链 -->
+	<bean id="requestProcess" class="org.core.p3.web.RequestProcess">
+		<property name="processHandlers">
+			<list>
+				<bean class="org.core.p3.web.process.ResourceProcessHandler">
+					<property name="urlPattern" value="${t3.url.pattern.resources}" />
+				</bean>
+				<bean class="org.core.p3.web.process.ActionProcessHandler">
+					<property name="urlPattern" value="${t3.url.pattern.action}" />
+				</bean>
+			</list>
+		</property>
+		<property name="encoding" value="${t3.encoding}" />
+	</bean>
+</beans>

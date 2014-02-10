@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>plugin-web-framework</title>
+		<script type="text/javascript" src="${request.contextPath}/plug-in/js/jquery-1.6.2.min.js"></script>
+		<script type="text/javascript">
+		$(document).ready(function(){
+  			$("#aa").click(function(){alert('hello world')});
+  	    });
+		</script>
+	</head>
+	<body>
+		<div><h1>Welcome To P3-Example</h1></div><br><br>
+		
+		<img alt="" src="${request.contextPath}/plug-in/image/jeecg.png"><br><br>
+		
+		<a href="#" id="aa">点击我demo</a><br><br>
+	</body>
+</html>
